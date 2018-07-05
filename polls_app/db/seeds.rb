@@ -25,7 +25,6 @@ Question.create(text: "How often do you drive?", poll_id: 3) #Q5
 Question.create(text: "What is your average fill-up cost?", poll_id: 3) #Q6
 Question.create(text: "Do you want to repeal the gas tax?", poll_id: 3) #Q7 
 
-
 AnswerChoice.create(text: "yes", question_id: 1)
 AnswerChoice.create(text: "no", question_id: 1)
 
