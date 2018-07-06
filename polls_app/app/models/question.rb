@@ -23,4 +23,21 @@ class Question < ApplicationRecord
   has_many :responses,
   through: :answer_choices,
   source: :responses
+  
+  def results
+    count = Hash.new(0)
+    answers = answer_choices
+    answers.each do |answer|
+      count[answer.text] += answer.responses.count
+    end
+    count
+  end
+  
+  def better_results
+    count = Hash.new(0)
+    answer_choices.includes(:responses).each do |answer|
+      count[answer.text] += answer.responses.length
+    end
+    count
+  end
 end

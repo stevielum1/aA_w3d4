@@ -10,7 +10,7 @@
 #
 
 class Response < ApplicationRecord
-  # validate :not_duplicate_response
+  validate :not_duplicate_response
   
   belongs_to :answer_choice,
   primary_key: :id,
@@ -26,16 +26,21 @@ class Response < ApplicationRecord
   through: :answer_choice,
   source: :question
   
-  # def sibling_responses
-  #   question.responses.where.not(id: self.id)
-  # end
-  # 
-  # def respondent_already_answered?
-  #   sibling_responses.exists?(user_id: self.user_id)  
-  # end
+  def sibling_responses
+    question.responses.where.not(id: self.id)
+  end
   
-  # private
-  # def not_duplicate_response
-  #   errors[:respondent] << "already answered" if respondent_already_answered?
-  # end
+  def respondent_already_answered?
+    sibling_responses.exists?(user_id: self.user_id)  
+  end
+  
+  def author_responded_to_own_poll?
+    return true unless self.question.poll.nil?
+    false
+  end
+  
+  private
+  def not_duplicate_response
+    errors[:respondent] << "already answered" if respondent_already_answered?
+  end
 end

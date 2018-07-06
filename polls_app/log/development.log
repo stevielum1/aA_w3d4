@@ -1371,3 +1371,471 @@ Migrating to CreateResponses (20180705214857)
   [1m[36mAnswerChoice Load (0.2ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
   [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (5090.0ms)[0m  [1m[35mDROP DATABASE IF EXISTS "polls_app_development"[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (242.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "polls_app_development"[0m
+  [1m[35m (124.6ms)[0m  [1m[35mDROP DATABASE IF EXISTS "polls_app_test"[0m
+  [1m[35m (983.8ms)[0m  [1m[35mCREATE DATABASE "polls_app_development" ENCODING = 'unicode'[0m
+  [1m[35m (251.8ms)[0m  [1m[35mCREATE DATABASE "polls_app_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (41.5ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (17.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "answer_choices" CASCADE[0m
+  [1m[35m (10.4ms)[0m  [1m[35mCREATE TABLE "answer_choices" ("id" bigserial primary key, "text" character varying, "question_id" integer NOT NULL, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE  INDEX  "index_answer_choices_on_question_id" ON "answer_choices"  ("question_id")[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "polls" CASCADE[0m
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE TABLE "polls" ("id" bigserial primary key, "title" character varying, "user_id" integer NOT NULL, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX  "index_polls_on_user_id" ON "polls"  ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "questions" CASCADE[0m
+  [1m[35m (6.8ms)[0m  [1m[35mCREATE TABLE "questions" ("id" bigserial primary key, "text" character varying, "poll_id" integer NOT NULL, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE  INDEX  "index_questions_on_poll_id" ON "questions"  ("poll_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "responses" CASCADE[0m
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE TABLE "responses" ("id" bigserial primary key, "user_id" integer NOT NULL, "answer_choice_id" integer NOT NULL, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE  INDEX  "index_responses_on_answer_choice_id" ON "responses"  ("answer_choice_id")[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE  INDEX  "index_responses_on_user_id" ON "responses"  ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (5.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "username" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (6.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20180705214857)[0m
+  [1m[35m (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20180705214444),
+(20180705214533),
+(20180705214634),
+(20180705214729);
+
+[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-07-05 23:52:51.142200"], ["updated_at", "2018-07-05 23:52:51.142200"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "answer_choices" CASCADE[0m
+  [1m[35m (10.4ms)[0m  [1m[35mCREATE TABLE "answer_choices" ("id" bigserial primary key, "text" character varying, "question_id" integer NOT NULL, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE  INDEX  "index_answer_choices_on_question_id" ON "answer_choices"  ("question_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "polls" CASCADE[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "polls" ("id" bigserial primary key, "title" character varying, "user_id" integer NOT NULL, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE  INDEX  "index_polls_on_user_id" ON "polls"  ("user_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "questions" CASCADE[0m
+  [1m[35m (5.8ms)[0m  [1m[35mCREATE TABLE "questions" ("id" bigserial primary key, "text" character varying, "poll_id" integer NOT NULL, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE  INDEX  "index_questions_on_poll_id" ON "questions"  ("poll_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "responses" CASCADE[0m
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE TABLE "responses" ("id" bigserial primary key, "user_id" integer NOT NULL, "answer_choice_id" integer NOT NULL, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX  "index_responses_on_answer_choice_id" ON "responses"  ("answer_choice_id")[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX  "index_responses_on_user_id" ON "responses"  ("user_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "username" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20180705214857)[0m
+  [1m[35m (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20180705214444),
+(20180705214533),
+(20180705214634),
+(20180705214729);
+
+[0m
+  [1m[35m (6.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-07-05 23:52:51.307768"], ["updated_at", "2018-07-05 23:52:51.307768"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "test"], ["updated_at", "2018-07-05 23:52:51.313962"], ["key", "environment"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.0ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "Bob"], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["username", "Bob"], ["created_at", "2018-07-05 23:52:51.382245"], ["updated_at", "2018-07-05 23:52:51.382245"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "Andy"], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["username", "Andy"], ["created_at", "2018-07-05 23:52:51.386531"], ["updated_at", "2018-07-05 23:52:51.386531"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "David"], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["username", "David"], ["created_at", "2018-07-05 23:52:51.390325"], ["updated_at", "2018-07-05 23:52:51.390325"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.3ms)[0m  [1m[32mINSERT INTO "polls" ("title", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Favorite Dog Breed"], ["user_id", 1], ["created_at", "2018-07-05 23:52:51.426386"], ["updated_at", "2018-07-05 23:52:51.426386"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "polls" ("title", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Favorite Ice Cream Flavor"], ["user_id", 2], ["created_at", "2018-07-05 23:52:51.432860"], ["updated_at", "2018-07-05 23:52:51.432860"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "polls" ("title", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Repeal Gas Tax"], ["user_id", 3], ["created_at", "2018-07-05 23:52:51.438651"], ["updated_at", "2018-07-05 23:52:51.438651"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.5ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "Do you own a dog?"], ["poll_id", 1], ["created_at", "2018-07-05 23:52:51.468663"], ["updated_at", "2018-07-05 23:52:51.468663"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.4ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "What's your favorite dog breed?"], ["poll_id", 1], ["created_at", "2018-07-05 23:52:51.475052"], ["updated_at", "2018-07-05 23:52:51.475052"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.5ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "How often you eatin ice cream?"], ["poll_id", 2], ["created_at", "2018-07-05 23:52:51.480739"], ["updated_at", "2018-07-05 23:52:51.480739"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.5ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "What flavor you munchin?"], ["poll_id", 2], ["created_at", "2018-07-05 23:52:51.485350"], ["updated_at", "2018-07-05 23:52:51.485350"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.3ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "How often do you drive?"], ["poll_id", 3], ["created_at", "2018-07-05 23:52:51.490107"], ["updated_at", "2018-07-05 23:52:51.490107"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.5ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (1.4ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "What is your average fill-up cost?"], ["poll_id", 3], ["created_at", "2018-07-05 23:52:51.493978"], ["updated_at", "2018-07-05 23:52:51.493978"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.2ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "Do you want to repeal the gas tax?"], ["poll_id", 3], ["created_at", "2018-07-05 23:52:51.499476"], ["updated_at", "2018-07-05 23:52:51.499476"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "yes"], ["question_id", 1], ["created_at", "2018-07-05 23:52:51.522006"], ["updated_at", "2018-07-05 23:52:51.522006"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "no"], ["question_id", 1], ["created_at", "2018-07-05 23:52:51.526197"], ["updated_at", "2018-07-05 23:52:51.526197"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "corgi"], ["question_id", 2], ["created_at", "2018-07-05 23:52:51.530453"], ["updated_at", "2018-07-05 23:52:51.530453"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "shiba inu"], ["question_id", 2], ["created_at", "2018-07-05 23:52:51.534050"], ["updated_at", "2018-07-05 23:52:51.534050"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "border collie"], ["question_id", 2], ["created_at", "2018-07-05 23:52:51.538691"], ["updated_at", "2018-07-05 23:52:51.538691"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "golden retriever"], ["question_id", 2], ["created_at", "2018-07-05 23:52:51.543643"], ["updated_at", "2018-07-05 23:52:51.543643"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "Once a week"], ["question_id", 3], ["created_at", "2018-07-05 23:52:51.547828"], ["updated_at", "2018-07-05 23:52:51.547828"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "sometimes"], ["question_id", 3], ["created_at", "2018-07-05 23:52:51.552389"], ["updated_at", "2018-07-05 23:52:51.552389"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "never"], ["question_id", 3], ["created_at", "2018-07-05 23:52:51.556048"], ["updated_at", "2018-07-05 23:52:51.556048"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "vanilla"], ["question_id", 4], ["created_at", "2018-07-05 23:52:51.560579"], ["updated_at", "2018-07-05 23:52:51.560579"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "chocolate"], ["question_id", 4], ["created_at", "2018-07-05 23:52:51.564646"], ["updated_at", "2018-07-05 23:52:51.564646"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "strawberry"], ["question_id", 4], ["created_at", "2018-07-05 23:52:51.569205"], ["updated_at", "2018-07-05 23:52:51.569205"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "Once a week"], ["question_id", 5], ["created_at", "2018-07-05 23:52:51.572806"], ["updated_at", "2018-07-05 23:52:51.572806"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "sometimes"], ["question_id", 5], ["created_at", "2018-07-05 23:52:51.577265"], ["updated_at", "2018-07-05 23:52:51.577265"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.6ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "never"], ["question_id", 5], ["created_at", "2018-07-05 23:52:51.582696"], ["updated_at", "2018-07-05 23:52:51.582696"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "twenty"], ["question_id", 6], ["created_at", "2018-07-05 23:52:51.587782"], ["updated_at", "2018-07-05 23:52:51.587782"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "thirty"], ["question_id", 6], ["created_at", "2018-07-05 23:52:51.592506"], ["updated_at", "2018-07-05 23:52:51.592506"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.5ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "fourty"], ["question_id", 6], ["created_at", "2018-07-05 23:52:51.598782"], ["updated_at", "2018-07-05 23:52:51.598782"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "yes"], ["question_id", 7], ["created_at", "2018-07-05 23:52:51.603189"], ["updated_at", "2018-07-05 23:52:51.603189"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "no"], ["question_id", 7], ["created_at", "2018-07-05 23:52:51.608348"], ["updated_at", "2018-07-05 23:52:51.608348"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.5ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 1], ["answer_choice_id", 1], ["created_at", "2018-07-05 23:52:51.646321"], ["updated_at", "2018-07-05 23:52:51.646321"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.9ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 1], ["answer_choice_id", 3], ["created_at", "2018-07-05 23:52:51.654343"], ["updated_at", "2018-07-05 23:52:51.654343"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.3ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 2], ["answer_choice_id", 7], ["created_at", "2018-07-05 23:52:51.661307"], ["updated_at", "2018-07-05 23:52:51.661307"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.4ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 2], ["answer_choice_id", 10], ["created_at", "2018-07-05 23:52:51.668137"], ["updated_at", "2018-07-05 23:52:51.668137"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.4ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 3], ["answer_choice_id", 13], ["created_at", "2018-07-05 23:52:51.674926"], ["updated_at", "2018-07-05 23:52:51.674926"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.4ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 3], ["answer_choice_id", 18], ["created_at", "2018-07-05 23:52:51.682303"], ["updated_at", "2018-07-05 23:52:51.682303"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.3ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 3], ["answer_choice_id", 19], ["created_at", "2018-07-05 23:52:51.689320"], ["updated_at", "2018-07-05 23:52:51.689320"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "Bob"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "Andy"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (1.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "David"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "polls" ("title", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Favorite Dog Breed"], ["user_id", 1], ["created_at", "2018-07-05 23:53:08.094113"], ["updated_at", "2018-07-05 23:53:08.094113"]]
+  [1m[35m (223.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "polls" ("title", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Favorite Ice Cream Flavor"], ["user_id", 2], ["created_at", "2018-07-05 23:53:08.324054"], ["updated_at", "2018-07-05 23:53:08.324054"]]
+  [1m[35m (59.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "polls" ("title", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Repeal Gas Tax"], ["user_id", 3], ["created_at", "2018-07-05 23:53:08.392041"], ["updated_at", "2018-07-05 23:53:08.392041"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.7ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "Do you own a dog?"], ["poll_id", 1], ["created_at", "2018-07-05 23:53:08.430425"], ["updated_at", "2018-07-05 23:53:08.430425"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.3ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "What's your favorite dog breed?"], ["poll_id", 1], ["created_at", "2018-07-05 23:53:08.436344"], ["updated_at", "2018-07-05 23:53:08.436344"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.4ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "How often you eatin ice cream?"], ["poll_id", 2], ["created_at", "2018-07-05 23:53:08.443051"], ["updated_at", "2018-07-05 23:53:08.443051"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.5ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "What flavor you munchin?"], ["poll_id", 2], ["created_at", "2018-07-05 23:53:08.450310"], ["updated_at", "2018-07-05 23:53:08.450310"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.6ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "How often do you drive?"], ["poll_id", 3], ["created_at", "2018-07-05 23:53:08.457401"], ["updated_at", "2018-07-05 23:53:08.457401"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (1.1ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "What is your average fill-up cost?"], ["poll_id", 3], ["created_at", "2018-07-05 23:53:08.464367"], ["updated_at", "2018-07-05 23:53:08.464367"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPoll Load (0.4ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "questions" ("text", "poll_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "Do you want to repeal the gas tax?"], ["poll_id", 3], ["created_at", "2018-07-05 23:53:08.471356"], ["updated_at", "2018-07-05 23:53:08.471356"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.5ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "yes"], ["question_id", 1], ["created_at", "2018-07-05 23:53:08.516477"], ["updated_at", "2018-07-05 23:53:08.516477"]]
+  [1m[35m (7.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.7ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "no"], ["question_id", 1], ["created_at", "2018-07-05 23:53:08.531477"], ["updated_at", "2018-07-05 23:53:08.531477"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "corgi"], ["question_id", 2], ["created_at", "2018-07-05 23:53:08.537301"], ["updated_at", "2018-07-05 23:53:08.537301"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "shiba inu"], ["question_id", 2], ["created_at", "2018-07-05 23:53:08.543553"], ["updated_at", "2018-07-05 23:53:08.543553"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.8ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "border collie"], ["question_id", 2], ["created_at", "2018-07-05 23:53:08.550334"], ["updated_at", "2018-07-05 23:53:08.550334"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "golden retriever"], ["question_id", 2], ["created_at", "2018-07-05 23:53:08.554729"], ["updated_at", "2018-07-05 23:53:08.554729"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (1.4ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "Once a week"], ["question_id", 3], ["created_at", "2018-07-05 23:53:08.561704"], ["updated_at", "2018-07-05 23:53:08.561704"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "sometimes"], ["question_id", 3], ["created_at", "2018-07-05 23:53:08.568672"], ["updated_at", "2018-07-05 23:53:08.568672"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "never"], ["question_id", 3], ["created_at", "2018-07-05 23:53:08.574024"], ["updated_at", "2018-07-05 23:53:08.574024"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "vanilla"], ["question_id", 4], ["created_at", "2018-07-05 23:53:08.578232"], ["updated_at", "2018-07-05 23:53:08.578232"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "chocolate"], ["question_id", 4], ["created_at", "2018-07-05 23:53:08.583773"], ["updated_at", "2018-07-05 23:53:08.583773"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "strawberry"], ["question_id", 4], ["created_at", "2018-07-05 23:53:08.588160"], ["updated_at", "2018-07-05 23:53:08.588160"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "Once a week"], ["question_id", 5], ["created_at", "2018-07-05 23:53:08.592626"], ["updated_at", "2018-07-05 23:53:08.592626"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "sometimes"], ["question_id", 5], ["created_at", "2018-07-05 23:53:08.597770"], ["updated_at", "2018-07-05 23:53:08.597770"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "never"], ["question_id", 5], ["created_at", "2018-07-05 23:53:08.601725"], ["updated_at", "2018-07-05 23:53:08.601725"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "twenty"], ["question_id", 6], ["created_at", "2018-07-05 23:53:08.608224"], ["updated_at", "2018-07-05 23:53:08.608224"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "thirty"], ["question_id", 6], ["created_at", "2018-07-05 23:53:08.612547"], ["updated_at", "2018-07-05 23:53:08.612547"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "fourty"], ["question_id", 6], ["created_at", "2018-07-05 23:53:08.617764"], ["updated_at", "2018-07-05 23:53:08.617764"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "yes"], ["question_id", 7], ["created_at", "2018-07-05 23:53:08.633032"], ["updated_at", "2018-07-05 23:53:08.633032"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "answer_choices" ("text", "question_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["text", "no"], ["question_id", 7], ["created_at", "2018-07-05 23:53:08.636474"], ["updated_at", "2018-07-05 23:53:08.636474"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.8ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 1], ["answer_choice_id", 1], ["created_at", "2018-07-05 23:53:08.665317"], ["updated_at", "2018-07-05 23:53:08.665317"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.7ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 1], ["answer_choice_id", 3], ["created_at", "2018-07-05 23:53:08.672097"], ["updated_at", "2018-07-05 23:53:08.672097"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.4ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 2], ["answer_choice_id", 7], ["created_at", "2018-07-05 23:53:08.677265"], ["updated_at", "2018-07-05 23:53:08.677265"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.3ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 2], ["answer_choice_id", 10], ["created_at", "2018-07-05 23:53:08.682746"], ["updated_at", "2018-07-05 23:53:08.682746"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.5ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 3], ["answer_choice_id", 13], ["created_at", "2018-07-05 23:53:08.688724"], ["updated_at", "2018-07-05 23:53:08.688724"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.3ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 3], ["answer_choice_id", 18], ["created_at", "2018-07-05 23:53:08.692823"], ["updated_at", "2018-07-05 23:53:08.692823"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mAnswerChoice Load (0.2ms)[0m  [1m[34mSELECT  "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "responses" ("user_id", "answer_choice_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 3], ["answer_choice_id", 19], ["created_at", "2018-07-05 23:53:08.697357"], ["updated_at", "2018-07-05 23:53:08.697357"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mResponse Load (0.7ms)[0m  [1m[34mSELECT  "responses".* FROM "responses" ORDER BY "responses"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mQuestion Load (1.1ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" INNER JOIN "answer_choices" ON "questions"."id" = "answer_choices"."question_id" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPoll Load (0.6ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mResponse Load (0.4ms)[0m  [1m[34mSELECT  "responses".* FROM "responses" ORDER BY "responses"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mQuestion Load (0.8ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" INNER JOIN "answer_choices" ON "questions"."id" = "answer_choices"."question_id" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPoll Load (0.4ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mResponse Load (0.6ms)[0m  [1m[34mSELECT  "responses".* FROM "responses" ORDER BY "responses"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mQuestion Load (1.1ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" INNER JOIN "answer_choices" ON "questions"."id" = "answer_choices"."question_id" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPoll Load (0.6ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mResponse Load (0.7ms)[0m  [1m[34mSELECT  "responses".* FROM "responses" ORDER BY "responses"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mQuestion Load (1.1ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" INNER JOIN "answer_choices" ON "questions"."id" = "answer_choices"."question_id" WHERE "answer_choices"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPoll Load (0.6ms)[0m  [1m[34mSELECT  "polls".* FROM "polls" WHERE "polls"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mQuestion Load (0.7ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" ORDER BY "questions"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mQuestion Load (0.5ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" ORDER BY "questions"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mAnswerChoice Load (0.7ms)[0m  [1m[34mSELECT "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."question_id" = $1[0m  [["question_id", 1]]
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 1]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 2]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 21]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 22]]
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" ORDER BY "questions"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mAnswerChoice Load (0.4ms)[0m  [1m[34mSELECT "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."question_id" = $1[0m  [["question_id", 1]]
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 1]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 2]]
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 21]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 22]]
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" ORDER BY "questions"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mAnswerChoice Load (0.5ms)[0m  [1m[34mSELECT "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."question_id" = $1[0m  [["question_id", 1]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 1]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 2]]
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 21]]
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 22]]
+  [1m[36mAnswerChoice Load (0.6ms)[0m  [1m[34mSELECT "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."question_id" = $1[0m  [["question_id", 1]]
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" ORDER BY "questions"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mAnswerChoice Load (0.4ms)[0m  [1m[34mSELECT "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."question_id" = $1[0m  [["question_id", 1]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 1]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 2]]
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 21]]
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 22]]
+  [1m[36mAnswerChoice Load (0.6ms)[0m  [1m[34mSELECT "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."question_id" = $1[0m  [["question_id", 1]]
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" ORDER BY "questions"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mAnswerChoice Load (0.3ms)[0m  [1m[34mSELECT "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."question_id" = $1[0m  [["question_id", 1]]
+  [1m[36mResponse Load (0.6ms)[0m  [1m[34mSELECT "responses".* FROM "responses" WHERE "responses"."answer_choice_id" IN (1, 2, 21, 22)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 1]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 2]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 21]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "responses" WHERE "responses"."answer_choice_id" = $1[0m  [["answer_choice_id", 22]]
+  [1m[36mQuestion Load (0.6ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" ORDER BY "questions"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mAnswerChoice Load (0.7ms)[0m  [1m[34mSELECT "answer_choices".* FROM "answer_choices" WHERE "answer_choices"."question_id" = $1[0m  [["question_id", 1]]
+  [1m[36mResponse Load (0.9ms)[0m  [1m[34mSELECT "responses".* FROM "responses" WHERE "responses"."answer_choice_id" IN (1, 2, 21, 22)[0m
